@@ -1,0 +1,145 @@
+<mat-toolbar color='primary'>Tech Call Form</mat-toolbar>
+<br>
+<form [formGroup]="techCallForm">
+	<mat-form-field appearance="outline">
+		<mat-label>Enter Order ID</mat-label>
+		<input matInput formControlName="orderID">
+  </mat-form-field>
+		<br>
+		<mat-form-field appearance="outline">
+			<mat-label>Enter Service ID</mat-label>
+			<input matInput placeholder="ex. MNBNB123456789" formControlName="serviceID">
+  </mat-form-field>
+			<br>
+			<mat-form-field appearance="outline">
+				<mat-label>Enter Techs Name</mat-label>
+				<input matInput placeholder="ex. John Smith" formControlName="techName">
+  </mat-form-field>
+				<br>
+				<mat-checkbox formControlName="isRepeatVisit">Repeat Visit</mat-checkbox>
+				<br>
+				<mat-form-field appearance="outline" *ngIf="techCallForm.get('isRepeatVisit').value" class="tech-call-textarea">
+					<mat-label>Reason for Repeat Visit</mat-label>
+					<textarea matInput formControlName="reasonForRepeatVisit"></textarea>
+  </mat-form-field>
+  <br>
+					<mat-form-field>
+						<mat-label>Visit Date</mat-label>
+						<input matInput [matDatepicker]="picker" formControlName="visitDate">
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+					</mat-form-field>
+					<br>
+					<mat-form-field appearance="outline">
+						<mat-label>Start Time</mat-label>
+						<input matInput type="time" value="" formControlName="startTime">
+  </mat-form-field>
+						<br>
+						<mat-form-field appearance="outline">
+							<mat-label>Finish Time</mat-label>
+							<input matInput type="time" value="" formControlName="finishTime">
+  </mat-form-field>
+							<br>
+							<mat-form-field appearance="outline" class="tech-call-textarea">
+								<mat-label>Provisioner Notes</mat-label>
+								<textarea matInput formControlName="provisionersNotes"></textarea>
+							</mat-form-field>
+							<br>
+							<mat-slide-toggle (change)="visitSuccessful()" formControlName="isSuccessful">
+								{{visitSuccess}}
+							</mat-slide-toggle>
+							<br>
+							<mat-form-field *ngIf="!isSuccessful" appearance="outline" class="tech-call-textarea">
+								<mat-label>Reason for Unsuccessful Visit</mat-label>
+								<textarea matInput formControlName="reasonFoeUnsuccessfulVisit"></textarea>
+							</mat-form-field>
+							<br>
+							<mat-accordion multi=true>
+								<mat-expansion-panel>
+									<mat-expansion-panel-header>
+										<mat-panel-title>
+											VOIP Problems
+										</mat-panel-title>
+										<mat-panel-description>
+											If Applicable
+										</mat-panel-description>
+									</mat-expansion-panel-header>
+									<mat-checkbox formControlName="isTechDidNotHaveNecessaryTools">Tech did not have
+										necessary tools
+									</mat-checkbox>
+									<mat-checkbox formControlName="isTechDidNotHaveAllTheHardware">Tech did not have all
+										the
+										hardware</mat-checkbox>
+									<mat-checkbox formControlName="isTechInstalledFaultyCabling">Tech installed faulty
+										cabling
+									</mat-checkbox>
+								</mat-expansion-panel>
+								<mat-expansion-panel>
+									<mat-expansion-panel-header>
+										<mat-panel-title>
+											Carrier Problems
+										</mat-panel-title>
+										<mat-panel-description>
+											If Applicable
+										</mat-panel-description>
+									</mat-expansion-panel-header>
+									<mat-checkbox formControlName="isDeliveredIncorrectly">Delivered Incorrectly
+									</mat-checkbox>
+									<mat-checkbox formControlName="isServiceNotDelivered">Service Not Delivered
+									</mat-checkbox>
+									<mat-checkbox formControlName="isWrongPairDetails">Wrong Pair Details</mat-checkbox>
+									<mat-checkbox formControlName="isServiceNotTagged">Service Not Tagged</mat-checkbox>
+								</mat-expansion-panel>
+								<mat-expansion-panel>
+									<mat-expansion-panel-header>
+										<mat-panel-title>
+											Macquarie Problems
+										</mat-panel-title>
+										<mat-panel-description>
+											If Applicable
+										</mat-panel-description>
+									</mat-expansion-panel-header>
+									isRequestMissingRequipment: false,
+									<mat-checkbox formControlName="isServiceNotTagged">Request Missing Equipment
+									</mat-checkbox>
+									<mat-checkbox formControlName="isFailedToAdviseOfInduction">Failed to Advise of
+										Induction
+									</mat-checkbox>
+								</mat-expansion-panel>
+								<mat-expansion-panel>
+									<mat-expansion-panel-header>
+										<mat-panel-title>
+											Customer Problems
+										</mat-panel-title>
+										<mat-panel-description>
+											If Applicable
+										</mat-panel-description>
+									</mat-expansion-panel-header>
+									<mat-checkbox formControlName="isComplexCablingReqauirements">Complex Cabling
+										Requirements
+									</mat-checkbox>
+									<mat-checkbox formControlName="isContactNotAvailable">Contact Not Available
+									</mat-checkbox>
+									<mat-checkbox formControlName="isSiteInaccessable">Site Inaccessable</mat-checkbox>
+									<mat-checkbox formControlName="isSiteUnabletoLocateMDF">Site Unable to locate MDF
+									</mat-checkbox>
+								</mat-expansion-panel>
+							</mat-accordion>
+							<br>
+							<mat-card>
+								<mat-card-content>
+									How likely are you to recommend this tech to friends/family?
+									<br>
+									<mat-slider thumbLabel [max]="10" [min]="1" [step]="1" [tickInterval]="1"
+										formControlName="techNPS">
+									</mat-slider>
+								</mat-card-content>
+							</mat-card>
+							<br>
+							<button mat-icon-button type="submit" [disabled]="!techCallForm.valid" (click)="onSubmit(techCallForm.value)">
+    <mat-icon>done_all</mat-icon>
+  </button>
+							<button mat-icon-button (click)="techCallForm.reset()">
+    <mat-icon>clear_all</mat-icon>
+  </button>
+</form>
