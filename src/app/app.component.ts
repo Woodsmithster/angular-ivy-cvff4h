@@ -41,6 +41,9 @@ export class AppComponent {
     isContactNotAvailable: false,
     isSiteInaccessable: false,
     isSiteUnabletoLocateMDF: false,
+    closureLevel1: ["", Validators.required],
+    closureLevel2: ["", Validators.required],
+    feeForServiceOwner: ["", Validators.required],
     techNPS: ["", Validators.required]
   });
 
